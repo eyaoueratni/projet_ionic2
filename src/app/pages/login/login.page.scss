@@ -1,0 +1,29 @@
+ion-list {
+    transform: translateY(10%);
+}
+
+
+
+ion-input {
+    font-size: 1rem;
+    ion-icon {
+        font-size: 1.2rem;
+    }
+}
+
+ion-input ion-icon  {
+    color: #4CAF50; /* Mets ici la couleur verte exacte du logo */
+    font-size: 1.5rem; /* Facultatif : ajuste la taille de l'icône */
+  }
+  
+div.signup {
+    ion-text {
+        font-size: 0.8rem;
+        vertical-align: -webkit-baseline-middle;
+    }
+    vertical-align: -webkit-baseline-middle;
+    ion-button {
+        --padding-start: 0;
+        text-transform: none;
+    }
+}

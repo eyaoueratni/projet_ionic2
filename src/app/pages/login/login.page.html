@@ -1,0 +1,138 @@
+
+
+<ion-content [fullscreen]="true">
+  <ion-list class="ion-margin ion-padding" >
+     <!-- Logo Section -->
+     <div class="logo" style="text-align: center; margin-top: 10px;">
+      <img src="assets/Let'sTalk.png" style="width: 250px; height: auto;">
+    </div>
+    <ion-card>
+      <form [formGroup]="form">
+ 
+        <ion-input
+        placeholder="Email" 
+        type="email" formControlName="email"  
+        class="ion-margin-buttom"
+        errorText="Please unter your email">
+       <ion-icon name="mail-outline" slot="start" >
+     
+       </ion-icon></ion-input>
+    
+    
+       <ion-input
+       placeholder="Password" 
+       type="password"
+        formControlName="password"  
+       [errorText]="form.get('password')?.hasError('minlength') ? '*.password must be atleast 8 character' :'please enter your password'">
+      <ion-icon name="lock-closed-outline" slot="start" >
+      <ion-input-password-toggle slot="end" color="dark"></ion-input-password-toggle>
+      </ion-icon></ion-input>
+    
+      <div>
+        <ion-button fill="clear" size="small" color="medium"  (click)="setFp(true)">
+          Forget password ?
+        </ion-button>
+      </div>
+    <div>
+      @if (!isLogin()) {
+        <ion-button size="large"
+         expand="block" 
+         shape="round"
+         class="ion-margin-top ion-padding-top" 
+         [strong]="true" 
+         (click)="onSubmit()"
+         >
+          <ion-text color="">Login</ion-text>
+        </ion-button>
+      } @else {
+        <ion-button 
+        size="large"
+        
+         expand="block" 
+         class="ion-margin-top ion-padding-top" 
+         [strong]="true" >
+         <ion-spinner name="cresecent">
+    
+         </ion-spinner>
+         </ion-button>
+      }
+     
+    </div>
+      
+     
+     </form>
+    </ion-card>
+    <div align="center" class="signup ion-margin-bottom">
+      <ion-text>Don't have an account ?</ion-text>
+      <ion-button fill="clear" size="small" color="white" [strong]="true" routerLink="signup" > Sign up </ion-button>
+     </div>
+
+     <ion-alert 
+     [isOpen]="!!erroMessage()"
+     (didDimiss)="setErroMessage(null)"
+    header="Alert" 
+    [message]="erroMessage()" 
+    [buttons]="['OK']"> 
+
+</ion-alert>
+</ion-list>
+
+
+
+ <!-- -------------------------------Forgot password modal ------------------------->
+<ion-modal [isOpen]="isFpModal()"
+(didDismiss)="setFp(false)"
+[breakpoints]="[0.5, 0.8, 1]"
+[initialBreakpoint]="0.8">
+<ng-template>
+<!-- Header (optional) -->
+<ion-header>
+<ion-toolbar>
+<ion-title>Reset password</ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- Email Input -->
+
+
+<form [formGroup]="fpForm">
+<div  class="ion-margin ion-padding">
+  <ion-input
+  placeholder="Email"
+  type="email"
+  formControlName="email"
+  
+  errorText="* Please enter your email">
+  <ion-icon name="mail-outline" slot="start"></ion-icon>
+  </ion-input>
+  </div>
+</form>
+<!-- Send Link Button -->
+<ion-button *ngIf="!isForgot()"
+       size="large"
+       expand="block"
+       shape="round"
+       class="ion-margin ion-padding-top"
+       style="--background: var(--ion-color-success-tint:);"
+       [strong]="true"
+       (click)="onFpSubmit()">
+<ion-text>Send link</ion-text>
+</ion-button>
+
+<!-- Loading Spinner when Forgot is in progress -->
+<ion-button *ngIf="isForgot()"
+       size="large"
+       expand="block"
+       class="ion-margin ion-padding-top"
+       [strong]="true">
+<ion-spinner name="crescent"></ion-spinner>
+</ion-button>
+</ion-content>
+</ng-template>
+</ion-modal>
+
+
+
+</ion-content>
+
