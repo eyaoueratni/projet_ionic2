@@ -1,5 +1,13 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { User } from '@angular/fire/auth';
+
+
+import { NavigationExtras, Router } from '@angular/router';
+
+import { IonModal } from '@ionic/angular';
+
 import { addIcons } from 'ionicons';
+
 import { ChatRoomService } from 'src/app/services/chat-room/chat-room.service';
 @Component({
   selector: 'app-chats',
@@ -9,7 +17,8 @@ import { ChatRoomService } from 'src/app/services/chat-room/chat-room.service';
 export class ChatsPage implements OnInit {
  chats=Array(10);
  isNewChat = signal<boolean>(false); 
- users = computed(()=> this.chatroom.users())  ;
+ users = computed(()=> this.chatroom.users());
+ private router=inject(Router);
   private chatroom = inject(ChatRoomService);
   constructor() {
     addIcons({
@@ -24,6 +33,24 @@ export class ChatsPage implements OnInit {
   //call users data 
   if(this.users() || this.users()!.length == 0) this.chatroom.getUsers() ;
   
-this.isNewChat.set(value) ; 
- }
+this.isNewChat.set(value) ; }
+
+async startChat(user: User, modal: IonModal) {
+  try {
+    // Use 'displayName' instead of 'name'
+    const userName = user.displayName || user.email ||  'Unknown User'; // Fallback to email if displayName is not set
+    const room = await this.chatroom.createChatRoom([user.uid], userName);
+
+    // Dismiss modal
+    modal.dismiss();
+
+    // Navigate to chat page
+    const navData: NavigationExtras = {
+      queryParams: {},
+    };
+    this.router.navigate(['/','tabs', 'chats', room?.id], navData);
+  } catch (e) {
+    console.error('Error starting chat:', e);
+  }
+}
 }

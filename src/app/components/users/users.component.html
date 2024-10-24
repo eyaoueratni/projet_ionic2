@@ -14,13 +14,12 @@
   <ion-list lines="none">
     
     @for (user of users(); track $index ) {
-    <ion-item color="light" >
+    <ion-item color="light" (click)="startChat(user)" >
       <ion-avatar slot="start">
         <ion-img [src]="'https://i.pravatar.cc/315'" ></ion-img>
       </ion-avatar>
       <ion-label>
-        Mohamed 
-        
+      {{user.name}}
       </ion-label>
   
     </ion-item>

@@ -31,6 +31,13 @@ const routes: Routes = [
     redirectTo: 'tabs/chats',
     pathMatch:'full',
   },
+
+  {
+    path: 'chats/:id',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+
+ 
  
 ];
 

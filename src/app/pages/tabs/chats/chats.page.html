@@ -37,7 +37,11 @@
   #usersModal [isOpen]="isNewChat()"
   (didDismiss)="setIsNewChat(false)">
   <ng-template>
-    <app-users *ngIf="users()" (close)="usersModal.dismiss()" [users]="users()"></app-users>
+    <app-users *ngIf="users()" 
+     [users]="users()"
+     (close)="usersModal.dismiss()" 
+     (user)="startChat($event,usersModal)"
+     ></app-users>
   </ng-template>
 </ion-modal>
 </ion-content>

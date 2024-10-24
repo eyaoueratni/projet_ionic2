@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Database, equalTo, get, orderByChild, ref, set } from '@angular/fire/database';
+import { Database, equalTo, get, orderByChild, push, ref, set } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +26,8 @@ export class ApiService {
   }
   equalTo(value:any){
     return equalTo(value);
+  }
+  pushData(ref:any){
+    return push(ref);
   }
 }

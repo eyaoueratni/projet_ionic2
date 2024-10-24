@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, input, OnInit, output, Output } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { IonicModule } from '@ionic/angular';
-import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +12,9 @@ import { addIcons } from 'ionicons';
 })
 export class UsersComponent  implements OnInit {
   users=input<any[]>([]) ;
+
   @Output() close = new EventEmitter<boolean>();
+  user = output<User>();
   constructor() {
     
    }
@@ -21,6 +23,9 @@ export class UsersComponent  implements OnInit {
   closeModal() {
     this.close.emit(true)  ;
   }
-
+ startChat(user :User){
+  this.user.emit(user);
+ }
+ 
 }
 
