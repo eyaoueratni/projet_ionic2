@@ -1,0 +1,18 @@
+import { CommonModule } from '@angular/common';
+import { Component, OnInit , Input } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+
+@Component({
+  selector: 'app-empty-screen',
+  templateUrl: './empty-screen.component.html',
+  styleUrls: ['./empty-screen.component.scss'],
+  standalone: true ,
+  imports: [CommonModule, IonicModule] ,
+})
+export class EmptyScreenComponent  implements OnInit {
+@Input() model: any; 
+  constructor() { }
+
+  ngOnInit() {}
+
+}
