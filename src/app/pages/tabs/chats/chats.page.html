@@ -15,18 +15,22 @@
       <ion-title size="large">Chats</ion-title>
     </ion-toolbar>
   </ion-header>
+
   <ion-list>
     
-    @for (chat of chats; track $index ) {
-    <ion-item [detail]="true">
+    @for (chatroom of chatrooms(); track $index ) {
+    <ion-item [detail]="true" (click)="getChat(chatroom)">
       <ion-avatar slot="start">
-        <ion-img [src]="'https://i.pravatar.cc/315'" ></ion-img>
+        <ion-img [src]="chatroom?.photo" ></ion-img>
       </ion-avatar>
       <ion-label>
-        Mohamed 
-        <p> 
-          Last message 
-        </p>
+        {{ chatroom?.name}}
+        @if(chatroom?.lastMessage){
+          <p> 
+           {{chatroom?.lastMessage}}
+          </p>
+        }
+       
       </ion-label>
   
     </ion-item>

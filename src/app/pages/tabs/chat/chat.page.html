@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>chat</ion-title>
+    <ion-title> {{ name() }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/chats"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">chat</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="chats() as chatsArray">
+      <ng-container *ngFor="let chat of chatsArray; let i = index">
+        <app-chat-box [chat]="chat"></app-chat-box>
+      </ng-container>
+    </ng-container>
+  </ion-list>
 </ion-content>
+
+<ion-footer color="primary" class="footer-style">
+  <ion-toolbar color="light">
+    <ion-item lines="none" class="input-item">
+      <ion-textarea 
+        autoGrow
+        rows="1" 
+        placeholder="Send message" 
+        class="ion-text-center message-input" 
+        [(ngModel)]="message">
+      </ion-textarea>
+      <ion-button slot="end" size="large" (click)="sendMessage()">
+        <ion-icon name="send"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>
