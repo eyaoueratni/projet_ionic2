@@ -1,5 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
+<<<<<<< HEAD
 import { onValue, query } from '@angular/fire/database';
+=======
+import { query, onValue } from '@angular/fire/database';
+>>>>>>> c35dcef2ae987dec35b342b31210be521d530d66
 import { ChatRoom } from 'src/app/interfaces/chat-room';
 import { ApiService } from '../api/api.service';
 import { AuthService } from '../auth/auth.service';
@@ -51,6 +55,7 @@ export class ChatRoomService {
     roomName: string,
     type: string = 'private'
   ): Promise<any> {
+<<<<<<< HEAD
     try {
       const chatRoomRef = this.api.getRef('chatrooms');
       const usersList = [this.currentUserId(), ...userIds];
@@ -101,6 +106,52 @@ export class ChatRoomService {
   getChatRooms() {
     const chatroomsRef = this.api.getRef('chatrooms');
 
+=======
+    const chatRoomRef = this.api.getRef('chatrooms');
+    const usersList = [this.currentUserId(), ...userIds];
+    const sortedUsersList = usersList.sort();
+    const usersHash = sortedUsersList.join(',');
+
+    // Query for an existing chat room with the same usersHash
+    const existingChatRoomQuery = query(
+      chatRoomRef,
+      this.api.orderByChild('usersHash'),
+      this.api.equalTo(usersHash)
+    );
+
+    const existingChatRoomSnapshot = await this.api.getData(existingChatRoomQuery);
+
+    if (existingChatRoomSnapshot?.exists()) {
+      const chatRooms = existingChatRoomSnapshot.val();
+      const privateChatRoom = Object.values(chatRooms).find(
+        (chatRoom: any) => chatRoom.type === 'private'
+      );
+      
+      if (privateChatRoom) {
+        return privateChatRoom;
+      }
+    }
+
+    // Create a new chat room if no matching private room exists
+    const newChatRoom = this.api.pushData(chatRoomRef);
+    const chatRoomId = newChatRoom.key;
+    const chatRoomData = {
+      id: chatRoomId,
+      users: sortedUsersList,
+      usersHash,
+      name: roomName,
+      type,
+      createdAt: new Date().toISOString()
+    };
+    
+    await this.api.setRefData(newChatRoom, chatRoomData);
+    return chatRoomData;
+  }
+
+  getChatRooms() {
+    const chatroomsRef = this.api.getRef('chatrooms');
+
+>>>>>>> c35dcef2ae987dec35b342b31210be521d530d66
     // Listen for real-time updates to the chatrooms list
     onValue(
       chatroomsRef,
@@ -120,10 +171,14 @@ export class ChatRoomService {
               );
 
               // Fetch the other user's data and the last message
+<<<<<<< HEAD
               return this.getOtherUserDataAndLastMessage(otherUserId, 
                 roomId, 
                 room, 
                 room.messages);
+=======
+              return this.getOtherUserDataAndLastMessage(otherUserId, roomId, room, room.messages);
+>>>>>>> c35dcef2ae987dec35b342b31210be521d530d66
             }
             return null;
           });
@@ -183,4 +238,8 @@ export class ChatRoomService {
       return null;
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c35dcef2ae987dec35b342b31210be521d530d66

@@ -15,6 +15,7 @@
       <ion-title size="large">Chats</ion-title>
     </ion-toolbar>
   </ion-header>
+<<<<<<< HEAD
 
   <ion-list>
     
@@ -34,8 +35,34 @@
       </ion-label>
   
     </ion-item>
+=======
+  @let chatroomsArray= chatrooms() ;
+@if(chatroomsArray && chatroomsArray?.length! > 0) {
+    <ion-list>
+    
+      @for (chatroom of chatrooms(); track $index ) {
+      <ion-item [detail]="true">
+        <ion-avatar slot="start">
+          <ion-img [src]="chatroom?.photo" ></ion-img>
+        </ion-avatar>
+        <ion-label>
+          {{chatroom?.name}}
+          @if(chatroom?.lastMessage) {
+            <p>{{ chatroom?.lastMessage }}</p>
+          } 
+        </ion-label>
+    
+      </ion-item>
+    } @empty   {
+      <app-empty-screen [model]="model"></app-empty-screen>
+    }
+    </ion-list>
+  }  @else {
+    <app-empty-screen [model]="model"></app-empty-screen>
+
+>>>>>>> c35dcef2ae987dec35b342b31210be521d530d66
   }
-  </ion-list>
+ 
 
   <ion-modal 
   #usersModal [isOpen]="isNewChat()"
